@@ -30,9 +30,9 @@ const Profile = () => {
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [bio, setBio] = useState(user?.bio || '');
-  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || user?.phone || '');
+  const [phone, setPhone] = useState(user?.phone || '');
   const [location, setLocation] = useState(user?.location || '');
-  const [profilePicture, setProfilePicture] = useState(user?.profilePicture || 'https://via.placeholder.com/150');
+  const [profilePicture, setProfilePicture] = useState(user?.profilePicture || user?.picture || 'https://via.placeholder.com/150');
   const [isUploading, setIsUploading] = useState(false);
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -68,7 +68,7 @@ const Profile = () => {
         name,
         email,
         bio,
-        phoneNumber,
+        phone,
         location,
         profilePicture
       };
@@ -145,9 +145,9 @@ const Profile = () => {
       setName(user.name || '');
       setEmail(user.email || '');
       setBio(user.bio || '');
-      setPhoneNumber(user.phoneNumber || user.phone || '');
+      setPhone(user.phone || '');
       setLocation(user.location || '');
-      setProfilePicture(user.profilePicture || 'https://via.placeholder.com/150');
+      setProfilePicture(user.profilePicture || user.picture || 'https://via.placeholder.com/150');
     }
   }, [user]);
 
@@ -298,8 +298,8 @@ const Profile = () => {
                       <label className="block text-sm font-medium text-gray-700">Phone Number</label>
                       <input
                         type="tel"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                         className="mt-1 p-2 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
@@ -349,7 +349,7 @@ const Profile = () => {
                       <PhoneIcon className="w-5 h-5 text-gray-400" />
                       <div>
                         <p className="text-sm font-medium text-gray-500">Phone</p>
-                        <p className="text-gray-900">{user?.phoneNumber || user?.phone || 'Not provided'}</p>
+                        <p className="text-gray-900">{user?.phone || 'Not provided'}</p>
                       </div>
                     </div>
                     

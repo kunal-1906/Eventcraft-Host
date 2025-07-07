@@ -35,7 +35,7 @@ const userService = {
       const requestData = {
         name: userData.name,
         bio: userData.bio,
-        phone: userData.phoneNumber || userData.phone, // Map phoneNumber to phone
+        phone: userData.phone,
         location: userData.location,
         preferences: userData.preferences
       };
@@ -50,22 +50,14 @@ const userService = {
       console.log('📋 Response status:', response.status);
       console.log('📋 Response data:', response.data);
       
-      // Map phone back to phoneNumber for frontend compatibility
-      const updatedUser = {
-        ...response.data,
-        phoneNumber: response.data.phone // Map phone to phoneNumber
-      };
-      
-      console.log('🔄 Mapped user data for frontend:', updatedUser);
-      
       // Update local storage with new user data
       const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-      const mergedUser = { ...currentUser, ...updatedUser };
+      const mergedUser = { ...currentUser, ...response.data };
       localStorage.setItem('user', JSON.stringify(mergedUser));
       
       console.log('💾 Updated localStorage with new user data');
       
-      return { data: updatedUser };
+      return { data: response.data };
     } catch (error) {
       console.error('❌ Profile update failed!');
       console.error('🚨 Error details:', error);
