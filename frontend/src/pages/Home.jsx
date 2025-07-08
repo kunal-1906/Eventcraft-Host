@@ -18,6 +18,26 @@ import {
 } from 'lucide-react';
 
 const Home = () => {
+   const [events, setEvents] = useState([]);  
+  const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
+
+  useEffect(() => {
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/popular`);
+
+      setEvents(response.data);
+    } catch (error) {
+      setError("Failed to fetch events.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchEvents();
+}, []);
+  
   const user = useSelector((state) => state.user.user);
   
   // Determine dashboard link based on user role
@@ -51,32 +71,7 @@ const Home = () => {
     }
   };
 
-  const features = [
-    {
-      icon: Calendar,
-      title: "Smart Event Planning",
-      description: "Create and manage events with our intuitive planning tools and automated workflows.",
-      color: "from-blue-500 to-cyan-500"
-    },
-    {
-      icon: Users,
-      title: "Seamless Registration", 
-      description: "Easy registration process with automated confirmations and ticket management.",
-      color: "from-purple-500 to-pink-500"
-    },
-    {
-      icon: MapPin,
-      title: "Venue Management",
-      description: "Find and book venues with integrated maps and availability tracking.",
-      color: "from-green-500 to-teal-500"
-    },
-    {
-      icon: Star,
-      title: "Attendee Experience",
-      description: "Enhance attendee engagement with networking tools and interactive features.",
-      color: "from-yellow-500 to-orange-500"
-    }
-  ];
+
 
   const stats = [
     { number: "10K+", label: "Events Created", icon: Calendar },
